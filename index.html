@@ -6,6 +6,7 @@
     <title>Books Library</title>
 
     <script src="Book.js" defer></script>
+    <script src="Library.js" defer></script>
     <script src="main.js" defer></script>
 
     <link rel="stylesheet" href="style.css" />
@@ -18,6 +19,9 @@
         </caption>
         <thead>
           <tr class="table-headers">
+            <th class="checkbox-cell">
+              <input type="checkbox" id="headerCheckbox" />
+            </th>
             <th>Title</th>
             <th>Author</th>
             <th>Pages</th>
@@ -26,7 +30,76 @@
         </thead>
         <tbody class="table-data"></tbody>
       </table>
+      <button class="deleteButton">Delete Selected Rows</button>
+      <button class="add-book">+</button>
     </div>
-    <button class="add-book">+</button>
+
+    <dialog class="add-book-dialog">
+      <button class="close-dialog">
+        <svg
+          aria-hidden="true"
+          focusable="false"
+          aria-labelledby="Close Dialog"
+          xmlns="http://www.w3.org/2000/svg"
+          x="0px"
+          y="0px"
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M 4.7070312 3.2929688 L 3.2929688 4.7070312 L 10.585938 12 L 3.2929688 19.292969 L 4.7070312 20.707031 L 12 13.414062 L 19.292969 20.707031 L 20.707031 19.292969 L 13.414062 12 L 20.707031 4.7070312 L 19.292969 3.2929688 L 12 10.585938 L 4.7070312 3.2929688 z"
+          ></path>
+        </svg>
+      </button>
+      <form action="#" method="dialog" class="add-new-book-form">
+        <header>
+          <h1>New Book</h1>
+        </header>
+        <article>
+          <div class="row-container">
+            <label for="title">Title</label>
+            <input type="text" name="title" id="title" />
+          </div>
+          <div class="row-container">
+            <label for="author">Author</label>
+            <input type="text" name="author" id="author" />
+          </div>
+          <div class="row-container pages-amount">
+            <label for="pages-amount">Amount of Pages</label>
+            <input type="number" name="pages-amount" id="pages-amount" />
+          </div>
+          <fieldset class="row-container">
+            <legend class="toggle-title">Status</legend>
+            <div class="form-toggle">
+              <div class="form-toggle-item item-1">
+                <input
+                  type="radio"
+                  id="status-option-read"
+                  name="status"
+                  value="read"
+                  checked
+                />
+                <label for="status-option-read">Read</label>
+              </div>
+              <div class="form-toggle-item item-2">
+                <input
+                  type="radio"
+                  name="status"
+                  id="status-option-not-read"
+                  value="not-read"
+                />
+                <label for="status-option-not-read">Not read</label>
+              </div>
+            </div>
+          </fieldset>
+        </article>
+        <footer>
+          <button class="submit-button" type="submit" value="confirm" disabled>
+            Add Book
+          </button>
+        </footer>
+      </form>
+    </dialog>
   </body>
 </html>
