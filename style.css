@@ -24,8 +24,7 @@ body {
   margin: 0;
   display: flex;
   justify-content: center;
-  font-family: 'Times New Roman', Times, serif;
-
+  font-family: "Times New Roman", Times, serif;
 }
 
 fieldset {
@@ -37,10 +36,62 @@ fieldset {
   padding: 20px 20px 10px;
   display: grid;
   gap: 10px;
+}
+
+/* Table */
+
+/* .table-container {
   max-height: 600px;
   overflow-y: auto;
+} */
+
+table.books thead {
+  position: sticky;
+  top: -1px;
+  z-index: 10;
+  background-color: rgb(251, 234, 201);
+  margin: 0;
+
+}
+
+.table-title {
+  font-size: 30px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+table.books {
+  table-layout: fixed;
+  max-width: 100%;
   min-width: 500px;
-  max-width: min(100%, 700px);
+  border-collapse: collapse;
+  border: 1px solid rgba(128, 128, 128, 0.31);
+}
+
+th,
+td {
+  padding: 20px;
+}
+
+th {
+  letter-spacing: 2px;
+}
+
+td {
+  letter-spacing: 1px;
+  word-break: break-word;
+}
+
+thead {
+  text-align: left;
+}
+
+.table-data .table-row {
+  cursor: pointer;
+}
+
+.table-data .table-row:hover {
+  background-color: #f4f3f3a8;
 }
 
 button {
@@ -54,7 +105,7 @@ button.add-book:hover {
 }
 
 button.add-book {
-  margin: 15px auto;
+  margin: 0 auto 15px;
   display: block;
   padding: 5px 40px;
 
@@ -69,8 +120,8 @@ button.add-book {
 }
 
 /* Delete rows button */
- 
-.delete-button { 
+
+.delete-button {
   padding: 4px 8px;
   border: none;
   background-color: #061c6ede;
@@ -93,66 +144,6 @@ input[type="checkbox"]:hover {
 
 #headerCheckbox {
   display: none;
-}
-
-/* Table */
-
-.table-title {
-  font-size: 30px;
-  text-align: center;
-  margin-bottom: 10px;
-}
-
-table.books {
-  table-layout: fixed;
-  width: 100%;
-  border-collapse: collapse;
-  border: 1px solid rgba(128, 128, 128, 0.31);
-}
-
-thead th:nth-child(1) {
-  width: 5%;
-}
-
-thead th:nth-child(2) {
-  width: 30%;
-}
-
-thead th:nth-child(3) {
-  width: 25%;
-}
-
-thead th:nth-child(4) {
-  width: 20%;
-}
-
-thead th:nth-child(5) {
-  width: 30%;
-}
-
-th,
-td {
-  padding: 20px;
-}
-
-th {
-  letter-spacing: 2px;
-}
-
-td {
-  letter-spacing: 1px;
-}
-
-thead {
-  text-align: left;
-}
-
-.table-data .table-row {
-  cursor: pointer;
-}
-
-.table-data .table-row:hover {
-  background-color: #f4f3f3a8;
 }
 
 /* Status */

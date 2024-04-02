@@ -19,6 +19,50 @@ function main() {
 
   container.addEventListener("click", handlePageClicks);
   headerCheckbox.addEventListener("change", toggleAllCheckboxes);
+
+  testBooksLayout();
+}
+
+function testBooksLayout() {
+  let book1 = new Book("To Kill a Mockingbird", "Harper Lee", 281, "read");
+
+  let book2 = new Book("1984", "George Orwell", 328, "not-read");
+
+  let book3 = new Book("The Great Gatsby", "F. Scott Fitzgerald", 180, "read");
+
+  let book4 = new Book("Moby Dick", "Herman Melville", 720, "not-read");
+
+  let book5 = new Book("Ulysses", "James Joyce", 730, "read");
+
+  let book6 = new Book("Don Quixote", "Miguel de Cervantes", 1023, "not-read");
+
+  let book7 = new Book("The Odyssey", "Homer", 500, "read");
+
+  let book8 = new Book("War and Peace", "Leo Tolstoy", 1225, "not-read");
+
+  let book9 = new Book("The Divine Comedy", "Dante Alighieri", 798, "read");
+
+  let book10 = new Book("Pride and Prejudice", "Jane Austen", 279, "not-read");
+  updateLibraryData(book1);
+  updateLibraryData(book2);
+  updateLibraryData(book3);
+  updateLibraryData(book4);
+  updateLibraryData(book5);
+  updateLibraryData(book6);
+  updateLibraryData(book7);
+  updateLibraryData(book8);
+  updateLibraryData(book9);
+  updateLibraryData(book10);
+  updateLibraryData(book1);
+  updateLibraryData(book2);
+  updateLibraryData(book3);
+  updateLibraryData(book4);
+  updateLibraryData(book5);
+  updateLibraryData(book6);
+  updateLibraryData(book7);
+  updateLibraryData(book8);
+  updateLibraryData(book9);
+  updateLibraryData(book10);
 }
 
 function showDeleteButton() {
@@ -201,7 +245,7 @@ function toggleReadStatus(event) {
   let parentId = element.parentNode.parentNode.id;
 
   let currentBook = library.storage[parentId];
-  let newStatus  = currentBook.status === "read" ? "not-read" : "read";
+  let newStatus = currentBook.status === "read" ? "not-read" : "read";
   currentBook.status = newStatus;
 
   if (element.classList.contains("read")) {
