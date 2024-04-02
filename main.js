@@ -19,6 +19,19 @@ function main() {
 
   container.addEventListener("click", handlePageClicks);
   headerCheckbox.addEventListener("change", toggleAllCheckboxes);
+
+  addExampleBooks();
+}
+
+function addExampleBooks() {
+  let book1 = new Book("To Kill a Mockingbird", "Harper Lee", 281, "read");
+  let book2 = new Book("1984", "George Orwell", 328, "not-read");
+  let book3 = new Book("The Great Gatsby", "F. Scott Fitzgerald", 180, "read");
+  let book4 = new Book("Moby Dick", "Herman Melville", 720, "not-read");
+  updateLibraryData(book1);
+  updateLibraryData(book2);
+  updateLibraryData(book3);
+  updateLibraryData(book4);
 }
 
 function showDeleteButton() {
@@ -268,7 +281,7 @@ function testBooksLayout() {
   let book8 = new Book("War and Peace", "Leo Tolstoy", 1225, "not-read");
   let book9 = new Book("The Divine Comedy", "Dante Alighieri", 798, "read");
   let book10 = new Book("Pride and Prejudice", "Jane Austen", 279, "not-read");
-  
+
   updateLibraryData(book1);
   updateLibraryData(book2);
   updateLibraryData(book3);
