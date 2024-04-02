@@ -1,27 +1,65 @@
-const container = document.querySelector(".books-container");
-const dialog = document.querySelector(".add-book-dialog");
-let tableData = document.querySelector(".table-data");
-let form = document.querySelector(".add-new-book-form");
-let library = new Library();
-
 let checkForm;
+const library = new Library();
+let dialog;
+let tableData;
+let form;
+let headerCheckbox;
+let deleteButton;
 
-container.addEventListener("click", processPageClicks);
+document.addEventListener("DOMContentLoaded", main);
 
-let dune = new Book("Dune", "Frank Herbert", 340, "read");
-let learnLikeAPro = new Book(
-  "Learn Like a Pro",
-  "Barbara Oakley",
-  200,
-  "not-read"
-);
+function main() {
+  const container = document.querySelector(".books-container");
+  dialog = document.querySelector(".add-book-dialog");
+  tableData = document.querySelector(".table-data");
+  form = document.querySelector(".add-new-book-form");
+  deleteButton = document.querySelector(".delete-button");
 
-updateLibraryData(dune);
-updateLibraryData(learnLikeAPro);
+  headerCheckbox = document.querySelector("#headerCheckbox");
 
+  container.addEventListener("click", handlePageClicks);
+  headerCheckbox.addEventListener("change", toggleAllCheckboxes);
+}
 
+function showDeleteButton() {
+  deleteButton.style.visibility = "visible";
+}
 
-function processPageClicks(event) {
+function hideDeleteButton() {
+  deleteButton.style.visibility = "hidden";
+}
+
+function isCheckboxChecked() {
+  const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+
+  const isAnyCheckboxChecked = Array.from(checkboxes).some(
+    (checkbox) => checkbox.checked
+  );
+
+  if (isAnyCheckboxChecked) {
+    showDeleteButton();
+  } else {
+    hideDeleteButton();
+  }
+}
+
+function toggleAllCheckboxes() {
+  const checkboxes = document.querySelectorAll(
+    'input[type="checkbox"]:not(#headerCheckbox)'
+  );
+
+  checkboxes.forEach((checkbox) => {
+    checkbox.checked = headerCheckbox.checked;
+  });
+
+  if (headerCheckbox.checked) {
+    showDeleteButton();
+  } else {
+    hideDeleteButton();
+  }
+}
+
+function handlePageClicks(event) {
   if (event.target.classList.contains("add-book")) {
     openDialog();
     dialog.addEventListener("click", processDialogClicks);
@@ -31,10 +69,44 @@ function processPageClicks(event) {
 
     checkForm = () => checkIfFormIsFilled(inputs, submitButton);
     dialog.addEventListener("input", checkForm);
-  } else if (event.target.classList.contains('status-span')) {
+  } else if (event.target.classList.contains("status-span")) {
     toggleReadStatus(event);
-  } else if (event.target.parentNode.classList.contains('table-row')) {
+  } else if (event.target.parentNode.classList.contains("table-row")) {
     toggleCheckbox(event);
+    isCheckboxChecked();
+  } else if (event.target.type === "checkbox") {
+    isCheckboxChecked();
+  } else if (event.target.classList.contains("delete-button")) {
+    deleteCheckedRows();
+    checkboxes = document.querySelectorAll('input[type="checkbox"]');
+  }
+}
+
+function deleteTableRow(checkbox) {
+  let row = checkbox.parentNode.parentNode;
+  row.remove();
+  isCheckboxChecked();
+}
+
+function deleteCheckedRows() {
+  const checkboxes = document.querySelectorAll(
+    'input[type="checkbox"]:not(#headerCheckbox)'
+  );
+
+  checkboxes.forEach((checkbox) => {
+    if (checkbox.checked) {
+      deleteTableRow(checkbox);
+    }
+  });
+
+  checkIfNoRowsLeft();
+}
+
+function checkIfNoRowsLeft() {
+  const tbody = document.querySelector("tbody.table-data");
+  if (tbody.children.length === 0) {
+    hideHeaderCheckbox();
+    hideDeleteButton();
   }
 }
 
@@ -47,7 +119,7 @@ function checkIfFormIsFilled(inputs, submitButton) {
 function processDialogClicks(event) {
   if (event.target.classList.contains("close-dialog")) {
     closeDialog();
-  } else if (event.target.classList.contains('submit-button')) {
+  } else if (event.target.classList.contains("submit-button")) {
     addNewBook(event);
     closeDialog();
   }
@@ -56,8 +128,7 @@ function processDialogClicks(event) {
 function addNewBook(event) {
   event.preventDefault();
   let book = createBookFromUserData();
-  console.log(book);
-  
+
   updateLibraryData(book);
 
   closeDialog();
@@ -66,23 +137,35 @@ function addNewBook(event) {
 function createBookFromUserData() {
   let bookData = {};
   Book.properties.forEach((property) => {
-    console.log(form.elements[property].value);
     bookData[property] = form.elements[property].value;
-  });  
-  console.log(bookData);
-  
-  return new Book(bookData.title, bookData.author, bookData['pages-amount'], bookData.status);
+  });
+
+  return new Book(
+    bookData.title,
+    bookData.author,
+    bookData["pages-amount"],
+    bookData.status
+  );
+}
+
+function showHeaderCheckbox() {
+  headerCheckbox.style.display = "inline";
+}
+
+function hideHeaderCheckbox() {
+  headerCheckbox.style.display = "none";
+  headerCheckbox.checked = false;
 }
 
 function updateLibraryData(book) {
   library.addBook(book);
   addBookToTable(book);
+  showHeaderCheckbox();
 }
 
 function addBookToTable(book) {
   const row = createTableRow(book);
-  console.log(library.booksAmount() - 1);
-  
+
   row.id = library.booksAmount() - 1;
   tableData.appendChild(row);
 }
@@ -118,7 +201,8 @@ function toggleReadStatus(event) {
   let parentId = element.parentNode.parentNode.id;
 
   let currentBook = library.storage[parentId];
-  currentBook.status = currentBook.status === "read" ? "not-read" : "read";
+  let newStatus  = currentBook.status === "read" ? "not-read" : "read";
+  currentBook.status = newStatus;
 
   if (element.classList.contains("read")) {
     element.classList.replace("read", "not-read");
@@ -126,9 +210,8 @@ function toggleReadStatus(event) {
     element.classList.replace("not-read", "read");
   }
 
-  element.textContent = element.textContent === "read" ? "not-read" : "read";
+  element.textContent = newStatus;
 }
-
 
 /* Dialog Processing */
 
@@ -156,6 +239,7 @@ function addCheckbox(row) {
   checkboxCell.classList.add("checkbox-cell");
   let checkbox = document.createElement("input");
   checkbox.type = "checkbox";
+  checkbox.name = "check-book";
   checkboxCell.appendChild(checkbox);
   row.appendChild(checkboxCell);
 }
@@ -166,7 +250,7 @@ function toggleCheckbox(event) {
   }
 
   let currentRow = event.target.parentNode;
-  
+
   let checkbox = currentRow.querySelector('input[type="checkbox"]');
   checkbox.checked = !checkbox.checked;
 }
