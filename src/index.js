@@ -75,7 +75,7 @@ const DisplayController = (() => {
   }
   
   function handlePageClicks(event) {
-    if (event.target.classList.contains("add-book")) {
+    if (event.target.classList.contains("open-add-book-form")) {
       openDialog();
       dialog.addEventListener("click", processDialogClicks);
   
@@ -96,7 +96,16 @@ const DisplayController = (() => {
       checkboxes = document.querySelectorAll('input[type="checkbox"]');
     }
   }
-  
+
+  function processDialogClicks(event) {
+    if (event.target.classList.contains("close-dialog")) {
+      closeDialog();
+    } else if (event.target.classList.contains("submit-button")) {
+      addNewBook(event);
+      closeDialog();
+    }
+  }
+
   function deleteTableRow(checkbox) {
     let row = checkbox.parentNode.parentNode;
     row.remove();
@@ -131,17 +140,10 @@ const DisplayController = (() => {
     submitButton.disabled = !allFilled;
   }
   
-  function processDialogClicks(event) {
-    if (event.target.classList.contains("close-dialog")) {
-      closeDialog();
-    } else if (event.target.classList.contains("submit-button")) {
-      addNewBook(event);
-      closeDialog();
-    }
-  }
   
   function addNewBook(event) {
     event.preventDefault();
+
     let book = createBookFromUserData();
   
     updateLibraryData(book);

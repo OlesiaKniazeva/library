@@ -21,7 +21,11 @@
           <thead>
             <tr class="table-headers">
               <th class="checkbox-cell">
-                <input type="checkbox" id="headerCheckbox" name="headerCheckbox" />
+                <input
+                  type="checkbox"
+                  id="headerCheckbox"
+                  name="headerCheckbox"
+                />
               </th>
               <th>Title</th>
               <th>Author</th>
@@ -33,7 +37,7 @@
         </table>
       </div>
       <button class="delete-button">Delete Selected Rows</button>
-      <button class="add-book">+</button>
+      <button class="open-add-book-form">+</button>
     </div>
 
     <dialog class="add-book-dialog">
@@ -61,11 +65,11 @@
         <article>
           <div class="row-container">
             <label for="title">Title</label>
-            <input type="text" name="title" id="title" />
+            <input type="text" name="title" id="title" maxlength="100" />
           </div>
           <div class="row-container">
             <label for="author">Author</label>
-            <input type="text" name="author" id="author" />
+            <input type="text" name="author" id="author" maxlength="100" />
           </div>
           <div class="row-container pages-amount">
             <label for="pages-amount">Amount of Pages</label>

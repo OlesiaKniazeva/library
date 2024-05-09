@@ -100,11 +100,11 @@ button {
 
 /* Add Book Button */
 
-button.add-book:hover {
+button.open-add-book-form:hover {
   background-color: rgb(245, 227, 191);
 }
 
-button.add-book {
+button.open-add-book-form {
   margin: 0 auto 15px;
   display: block;
   padding: 5px 40px;
